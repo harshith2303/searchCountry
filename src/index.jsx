@@ -18,41 +18,52 @@ export function App() {
       .catch((error) => console.error("got wrong" + error));
   }, []);
   let filteredData = data.filter((ele) =>
-    ele.common.includes(search)
+    ele.common.toLowerCase().includes(search.toLowerCase())
   );
   return (
-    <div style={{textAlign:"center"}}>
-      <input style={{width:"50vw"}}
-        type="text"
-        placeholder="Search countries..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <div className="countryCard" style={{display:"flex",
-      flexWrap:"wrap"
-      
-      }}>
-      {filteredData.length > 0 && filteredData.map((ele) => (
-        <div 
-          style={{
-            border: "2px solid black",
-            width: "150px",
-            margin: "10px",
-            borderRadius: "10px",
-            textAlign:"center"
-          }}
-        >
-          <img
-            style={{ width: "100px", height: "100px", margin: "10px"}}
-            src={ele.png}
-            alt={ele.common}
-          />
-          <h4>{ele.common}</h4>
-        </div>
-      ))}
-      </div>
+  <div style={{ textAlign: "center" }}>
+    <input
+      style={{ width: "50vw", padding: "10px", margin: "20px" }}
+      type="text"
+      placeholder="Search countries..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+    />
+
+    <div
+      className="countryCard"
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+      }}
+    >
+      {filteredData.length === 0 && <h3>No results found</h3>}
+
+      {filteredData.length > 0 &&
+        filteredData.map((ele) => (
+          <div
+            key={ele.common}
+            style={{
+              border: "2px solid black",
+              width: "150px",
+              margin: "10px",
+              borderRadius: "10px",
+              textAlign: "center",
+            }}
+          >
+            <img
+              style={{ width: "100px", height: "100px", margin: "10px" }}
+              src={ele.png}
+              alt={ele.common}
+            />
+            <h4>{ele.common}</h4>
+          </div>
+        ))}
     </div>
-  );
+  </div>
+);
+
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
