@@ -18,7 +18,7 @@ export function App() {
       .catch((error) => console.error("got wrong" + error));
   }, []);
   let filteredData = data.filter((ele) =>
-    ele.common.toLowerCase().includes(search.toLowerCase())
+    ele.common.includes(search)
   );
   return (
     <div style={{textAlign:"center"}}>
