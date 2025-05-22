@@ -32,7 +32,7 @@ export function App() {
       flexWrap:"wrap"
       
       }}>
-      {filteredData.map((ele) => (
+      {filteredData.length > 0 && filteredData.map((ele) => (
         <div 
           style={{
             border: "2px solid black",
