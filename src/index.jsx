@@ -63,7 +63,7 @@ export function App() {
                   alt={country.common}
                   style={{ width: "100px", height: "100px", margin: "10px" }}
                 />
-                <h4>{country.common}</h4>
+                <h2>{country.common}</h2>
               </div>
             );
           }
