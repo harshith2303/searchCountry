@@ -38,9 +38,9 @@ export function App() {
         justifyContent: "center",
       }}
     >
-      {filteredData.length === 0 && <h3>No results found</h3>}
+      
 
-      {filteredData.length > 0 &&
+      {
         filteredData.map((ele) => (
           <div
             key={ele.common}
