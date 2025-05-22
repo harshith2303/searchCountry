@@ -7,64 +7,73 @@ import ReactDOM from 'react-dom/client';
 
 import { useEffect, useState } from "react";
 
+
 export function App() {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
+
   useEffect(() => {
     fetch(
       "https://countries-search-data-prod-812920491762.asia-south1.run.app/countries"
     )
-      .then((rawData) => rawData.json().then((finalData) => setData(finalData)))
-      .catch((error) => console.error("got wrong" + error));
+      .then((res) => res.json())
+      .then((finalData) => setData(finalData))
+      .catch((error) => console.error("Error fetching countries: " + error));
   }, []);
-  let filteredData = data.filter((ele) =>
-    ele.common.toLowerCase().includes(search.toLowerCase())
+
+  const hasResults = data.some((country) =>
+    country.common.toLowerCase().includes(search.toLowerCase())
   );
+
   return (
-  <div style={{ textAlign: "center" }}>
-    <input
-      style={{ width: "50vw", padding: "10px", margin: "20px" }}
-      type="text"
-      placeholder="Search countries..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
+    <div style={{ textAlign: "center" }}>
+      <input
+        type="text"
+        placeholder="Search countries..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={{ width: "50vw", padding: "10px", margin: "20px" }}
+      />
 
-    <div
-      className="countryCard"
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-      }}
-    >
-      
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
+        {!hasResults && search !== "" && <h3>No results found</h3>}
 
-      {
-        filteredData.map((ele) => (
-          <div
-            key={ele.common}
-            style={{
-              border: "2px solid black",
-              width: "150px",
-              margin: "10px",
-              borderRadius: "10px",
-              textAlign: "center",
-            }}
-          >
-            <img
-              style={{ width: "100px", height: "100px", margin: "10px" }}
-              src={ele.png}
-              alt={ele.common}
-            />
-            <h4>{ele.common}</h4>
-          </div>
-        ))}
+        {data.map((country) => {
+          if (country.common.toLowerCase().includes(search.toLowerCase())) {
+            return (
+              <div
+                className="countryCard"
+                key={country.common}
+                style={{
+                  border: "2px solid black",
+                  width: "150px",
+                  margin: "10px",
+                  borderRadius: "10px",
+                  textAlign: "center",
+                }}
+              >
+                <img
+                  src={country.png}
+                  alt={country.common}
+                  style={{ width: "100px", height: "100px", margin: "10px" }}
+                />
+                <h4>{country.common}</h4>
+              </div>
+            );
+          }
+          return null;
+        })}
+      </div>
     </div>
-  </div>
-);
-
+  );
 }
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
