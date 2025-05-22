@@ -22,18 +22,18 @@ export function App() {
   );
   return (
     <div style={{textAlign:"center"}}>
-      <input
+      <input style={{width:"50vw"}}
         type="text"
         placeholder="Search countries..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <div style={{display:"flex",
+      <div className="countryCard" style={{display:"flex",
       flexWrap:"wrap"
       
       }}>
       {filteredData.map((ele) => (
-        <div
+        <div 
           style={{
             border: "2px solid black",
             width: "150px",
